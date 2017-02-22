@@ -1,0 +1,40 @@
+class: App\Banner
+icon: fa fa-picture-o
+sort:
+  field: title
+  order: asc
+list:
+  title: Título
+  link: Enlace
+fields:
+  image:
+    label: Imagen
+    type: image
+    validate: required|image
+    validateAtEdit: image
+    path: storage/banners
+    sizes:
+      - resize: 1200
+        suffix: n
+      - fit: 640x640
+        suffix: t
+  title:
+    label: Título
+    type: text
+    validate: required
+  subtitle:
+    label: Subtítulo
+    type: text
+  link:
+    label: Enlace
+    type: text
+    placeholder: http://
+    validate: required|url
+  size:
+    label: Tamaño
+    type: select
+    options:
+      0: 1⨉1
+      1: 1⨉2
+      2: 2⨉1
+      3: 2⨉2

@@ -1,0 +1,992 @@
+@import "normalize";
+@import 'bourbon';
+$em-base: 16;
+@import "px-to-em";
+@import "retina-image";
+
+// Neat config
+$max-width: calc(100% - 32px);
+$grid-columns: 8;
+$gutter: modular-scale(-10);
+// $visual-grid: true;
+@import 'neat';
+
+/**
+ * Break points
+ */
+
+$tablet: new-breakpoint(max-width 1098px);
+$mobile: new-breakpoint(max-width 880px, 2);
+
+/**
+ * Fonts
+ */
+
+@include font-face("DINWeb", "/fonts/DINWeb", $file-formats: eot woff);
+@include font-face("DINWeb", "/fonts/DINWeb-Medium", $file-formats: eot woff) {
+  font-weight: 500;
+};
+@include font-face("DINWeb", "/fonts/DINWeb-Light", $file-formats: eot woff) {
+  font-weight: 300;
+};
+
+$din: 'DINWeb', sans-serif;
+
+@import url("//hello.myfonts.net/count/329d6d");  
+@include font-face('PFDINStencilPro', '/fonts/329D6D_0_0', $file-formats: eot svg ttf woff woff2) {
+  font-weight: 300;
+};
+@include font-face('PFDINStencilPro', '/fonts/329D6D_1_0', $file-formats: eot svg ttf woff woff2) {
+  font-weight: 100;
+};
+
+$stencil: 'PFDINStencilPro', sans-serif;
+
+@include font-face('PFDINTextPro', '/fonts/329D6D_2_0', $file-formats: eot svg ttf woff woff2) {
+  font-weight: 700;
+};
+@include font-face('PFDINTextPro', '/fonts/329D6D_3_0', $file-formats: eot svg ttf woff woff2) {
+  font-weight: 300;
+};
+@include font-face('PFDINTextPro', '/fonts/329D6D_4_0', $file-formats: eot svg ttf woff woff2) {
+  font-weight: 500;
+};
+
+$dintext: 'PFDINTextPro', sans-serif;
+ 
+
+/**
+ * Colors
+ */
+
+$color-dark: #3c3c3b;
+$color-grey: #706f6f;
+$color-grey-light: #e1e0e0;
+$color-orange: #ef7d00;
+
+/**
+ * Global
+ */
+
+html {
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  @include outer-container;
+  font-family: $din;
+  
+  &.grey {
+    background: $color-grey-light;
+  }
+  
+  .row.padded {
+    @include row;
+    margin: 60px 0px;
+    
+    .col {
+      @include span-columns(3);
+      @include shift(0.5);
+    }
+  }
+  
+  .img-full {
+    width: 100%;
+  }
+  
+  .col {
+    @include span-columns(4);
+  }
+  
+  h2 {
+    color: $color-dark;
+    font-size: em(36);
+    font-weight: bold;
+    line-height: 100%;
+    margin: 80px;
+    text-transform: uppercase;
+    
+    &.lower {
+      text-transform: none;
+    }
+    
+    &.project {
+      margin: 80px 0px 0px;
+      @include span-columns(7);
+      @include shift(1);
+    }
+    
+    &.stencil {
+      font-family: $stencil;
+      font-weight: 100;
+      text-transform: none;
+      
+      strong {
+        font-weight: 300;
+      }
+    }
+    
+    small {
+      display: block;
+      font-style: 0.85em;
+      font-weight: normal;
+    }
+  }
+  
+  h3 {
+    color: $color-dark;
+    font-size: em(24);
+    font-weight: 500;
+    margin: 0px;
+    
+    &.center {
+      color: $color-orange;
+      font-size: em(18);
+      font-weight: bold;
+      text-align: center;
+    }
+  }
+  
+  h4 {
+    color: $color-dark;
+    font-size: em(24);
+    font-weight: 300;
+    margin: 0px;
+    
+    a {
+      color: $color-orange;
+      text-decoration: underline;
+      
+      span {
+        color: $color-dark;
+      }
+    }
+  }
+  
+  @include media($mobile) {
+    .col, .row.padded .col {
+      @include span-columns(2);
+      @include shift(0);
+    }
+    
+    h2 {
+      margin: 40px 0px;
+      
+      &.project {
+        margin: 40px 0px 0px;
+      }
+    }
+    
+    h3 {
+      font-size: em(16);
+    }
+    
+    h4 {
+      font-size: em(16);
+    }
+  }
+}
+
+/**
+ * Header
+ */
+
+#header-wrapper {
+  height: 58px;
+}
+
+header {
+  background: white;
+  height: 58px;
+  padding: 15px 32px;
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+  
+  @include media($mobile) {
+    padding: 18px 16px;
+  }
+}
+
+#logo {
+  @include retina-image('../images/logo', 190px 30px);
+  float: left;
+  height: 30px;
+  margin: 0px;
+  width: 190px;
+  
+  a {
+    display: block;
+    height: 100%;
+  }
+  
+  span {
+    display: none;
+  }
+}
+
+#nav-toggle {
+  color: $color-dark;
+  display: none;
+  font-size: 24px;
+  height: 28px;
+  right: 16px;
+  padding: 2px 0px;
+  position: absolute;
+  text-align: right;
+  top: 12px;
+  width: 32px;
+  
+  @include media($mobile) {
+    display: block;
+  }
+}
+
+nav {
+  @include span-columns(4);
+  float: right;
+  
+  > ul {
+    display: block;
+    font-size: em(14);
+    list-style: none;
+    margin: 5px 0px 0px;
+    padding: 0px;
+    
+    > li {
+      @include span-columns(1 of 4);
+      font-family: $din;
+      position: relative;
+      text-align: right;
+      text-transform: uppercase;
+      z-index: 500;
+      -webkit-font-smoothing: antialiased;
+      
+      span {
+        display: none;
+        font-size: 1.6em;
+        line-height: 14px;
+        margin-left: 3px;
+        position: absolute;
+        top: -2px;
+      }
+      
+      &:hover {
+        ul {
+          display: block;
+        }
+        
+        span {
+          display: inline;
+        }
+      }
+      
+      &:first-child {
+        @include shift(1);
+      }
+      
+      ul {
+        background: white;
+        display: none;
+        font-size: 0.85em;
+        list-style: none;
+        margin: 0px;
+        padding: 6px 8px 6px 8px;
+        position: absolute;
+        right: -10px;
+        width: 150px;
+        
+        &.double {
+          width: 240px;
+          
+          li {
+            float: left;
+            margin-right: 0px;
+            width: 50%;
+          }
+        }
+        
+        li {
+          display: block;
+          float: none;
+          width: 100%;
+        }
+        
+        a {
+          line-height: 140%;
+          padding: 8px 0px;
+        }
+      }
+    }
+  }
+  
+  a {
+    color: $color-dark;
+    display: block;
+    text-decoration: none;
+  }
+  
+  @include media($tablet) {
+    @include span-columns(2);
+    background: white;
+    clear: both;
+    display: none;
+    float: none;
+    overflow: hidden;
+    width: 100%;
+    
+    > ul {
+      // display: none;
+      margin: 12px 0px 0px;
+      
+      > li, > li:first-child, > li:last-child {
+        @include span-columns(2);
+        @include shift(0);
+        border-bottom: 1px solid lighten($color-dark, 70%);
+        float: none;
+        font-size: em(18);
+        line-height: 180%;
+        margin: 0px;
+        padding-top: 3px;
+        text-align: left;
+        width: 100%;
+        
+        &:last-child {
+          border-bottom: none;
+        }
+        
+        &:hover {
+          ul {
+            display: none;
+          }
+          
+          span {
+            display: none;
+          }
+        }
+        
+        ul, ul.double {
+          padding: 0px;
+          position: static;
+          width: 100%;
+          
+          li {
+            border-top: 1px solid lighten($color-dark, 70%);
+            padding-top: 3px;
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Footer
+ */
+
+footer {
+  @include outer-container;
+  font-family: $din;
+  font-weight: 300;
+  margin: 108px 16px 0px;
+  padding: 0px 0px 19px;
+  
+  .col {
+    @include span-columns(1);
+    
+    &:first-child {
+      @include span-columns(2);
+    }
+    
+    &.shift {
+      @include shift(3);
+    }
+  }
+  
+  .title {
+    display: block;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+  
+  .section {
+    @include span-columns(1 of 2);
+    border-bottom: 1px solid $color-orange;
+    color: $color-orange;
+    display: block;
+  }
+  
+  p {
+    font-size: em(16);
+    margin: 0px;
+    padding-right: 14px;
+    
+    a {
+      color: $color-orange;
+      display: inline-block;
+      text-decoration: none;
+    }
+    
+    span {
+      font-size: 1.4em;
+    }
+    
+    strong {
+      font-weight: 500;
+    }
+  }
+  
+  hr {
+    border: none;
+    margin: 54px 0px 0px;
+  }
+  
+  .link {
+    color: $color-dark;
+    display: block;
+    font-size: em(16);
+    margin-bottom: 11px;
+    text-decoration: none;
+  }
+  
+  @include media($mobile) {
+    .col, .col:first-child, .col.shift {
+      @include span-columns(1 of 2);
+      @include shift(0);
+      margin-top: 16px;
+    }
+    
+    .section {
+      @include span-columns(1 of 2);
+    }
+  }
+}
+
+/**
+ * Home
+ */
+
+#home-text {
+  font-family: $din;
+  font-size: em(62);
+  font-weight: 500;
+  padding: 120px;
+  
+  @include media($mobile) {
+    font-size: em(32);
+    padding: 40px 16px 0px;
+  }
+}
+
+/**
+ * Projects
+ */
+
+#projects-grid, #project-grid {
+  @include outer-container;
+  margin-top: 60px;
+  
+  &.no-top {
+    margin-top: 0px;
+  }
+  
+  .grid-sizer {
+    width: 25%;
+  }
+  
+  .project-item {
+    border-left: 2px solid white;
+    border-right: 2px solid white;
+    height: calc(16vw - 2px);
+    margin: 0px 0px 4px;
+    overflow: hidden;
+    width: 25%;
+    
+    &.large {
+      width: 50%;
+    }
+    
+    &.tall {
+      height: 32vw;
+    }
+  }
+  
+  a {
+    display: block;
+    height: 100%;
+    left: 0px;
+    position: relative;
+    top: 0px;
+    width: 100%;
+  }
+  
+  .cover {
+    background: rgba($color-orange, 0.8);
+    height: 100%;
+    opacity: 0;
+    position: absolute;
+    text-decoration: none;
+    width: 100%;
+    z-index: 10;
+    transition: all 0.2s;
+    
+    span {
+      color: white;
+      display: block;
+      font-family: $din;
+    }
+    
+    .name {
+      font-size: em(28);
+      font-weight: 500;
+      margin: 18px 18px 0px;
+    }
+    
+    .category {
+      font-size: em(19);
+      font-weight: 300;
+      margin: 0px 18px;
+    }
+    
+    &:hover {
+      opacity: 1;
+    }
+  }
+  
+  img {
+    z-index: 1;
+  }
+  
+  @include media($mobile) {
+    .project-item, .project-item.large,  .project-item.tall {
+      height: 50vw;
+      width: 100%;
+    }
+  }
+}
+
+#project-grid {
+  margin-top: 60px;
+  
+  .project-item {
+    border-left: 2px solid white;
+    border-right: 2px solid white;
+    height: 27vw;
+    margin: 0px 0px 4px;
+    overflow: hidden;
+    width: 50%;
+    
+    &.large {
+      width: 100%;
+    }
+    
+    &.tall {
+      height: 55vw;
+    }
+    
+    &.big {
+      height: 55vw;
+      width: 100%;
+    }
+    
+    iframe, embed {
+      height: 100%;
+      width: 100%;
+    }
+  }
+  
+  .separator {
+    border: none;
+    height: 60px;
+    width: 100%;
+  }
+}
+
+#project-description {
+  @include row;
+  color: $color-dark;
+  font-size: em(15);
+  margin-bottom: 60px;
+  
+  a {
+    color: $color-dark;
+    display: block;
+    font-weight: 500;
+    margin-bottom: 6px;
+    text-decoration: none;
+  }
+  
+  strong {
+    font-weight: 500;
+  }
+  
+  .tags {
+    @include shift(1 of 8);
+    @include span-columns(2);
+    font-size: 0.9em;
+    padding-top: 56px;
+    
+    span {
+      display: block;
+      line-height: 140%;
+      width: 60%;
+    }
+  }
+  
+  .description {
+    @include span-columns(3.5);
+    columns: 2;
+    column-gap: 30px;
+    padding-right: 20px;
+    
+    p {
+      color: $color-grey;
+      font-size: 1.14em;
+      margin: 0px 0px 16px;
+    }
+    
+    a {
+      color: $color-grey;
+      text-decoration: none;
+      transition: all 0.2s;
+      
+      &:hover {
+        color: $color-orange;
+      }
+    }
+  }
+  
+  .credits {
+    @include span-columns(1.5);
+    font-size: 0.9em;
+    
+    p {
+      margin-top: 0px;
+    }
+    
+    a {
+      color: $color-orange;
+      text-decoration: none;
+    }
+    
+    .share strong, .share .fa {
+      line-height: 24px;
+      vertical-align: middle;
+    }
+    
+    .fa {
+      color: $color-dark;
+      display: inline-block;
+      font-size: 1.8em;
+      margin-left: 4px;
+    }
+  }
+  
+  @include media($mobile) {
+    .tags {
+      @include span-columns(2);
+      @include shift(0);
+      margin-bottom: 24px;
+    }
+    
+    .description {
+      @include span-columns(2);
+      columns: 1;
+      margin-bottom: 24px;
+    }
+    
+    .credits {
+      @include span-columns(2);
+    }
+  }
+}
+
+/**
+ * About us
+ */
+
+#about-us-video {
+  iframe {
+    height: 55vw;
+  }
+}
+
+#staff {
+  margin-top: 60px;
+  
+  .staff-member {
+    @include span-columns(2);
+    @include omega(4n);
+    height: 16vw;
+    margin-bottom: 3px;
+    position: relative;
+  }
+  
+  .signature {
+    background: $color-orange;
+    display: block;
+    height: 100%;
+    left: 0px;
+    opacity: 0;
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    z-index: 10;
+    transition: all 0.2s;
+    mix-blend-mode: multiply;
+    
+    
+    &:hover {
+      opacity: 1;
+    }
+  }
+  
+  .signature-img {
+    bottom: 20px;
+    right: 20px;
+    position: absolute;
+    
+    &#signature-1 {
+      @include retina-image('../images/staff/staff-signature-1', 38px 14px);
+      height: 14px;
+      width: 38px;
+    }
+  }
+  
+  .image {
+    background-size: cover;
+    height: 100%;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .card {
+    background: rgba($color-orange, 0.8);
+    color: white;
+    display: block;
+    height: 100%;
+    font-size: em(14);
+    left: 100%;
+    overflow: hidden;
+    padding: 10px 0px;
+    position: absolute;
+    width: 0px;
+    z-index: 300;
+    
+    &.right {
+      left: 0px;
+    }
+    
+    .author {
+      bottom: 10px;
+      left: 16px;
+      position: absolute;
+      width: 65%;
+    }
+    
+    .links {
+      bottom: 10px;
+      font-size: 1.9em;
+      position: absolute;
+      right: 16px;
+      
+      a {
+        color: white;
+      }
+    }
+  }
+  
+  @include media($mobile) {
+    .staff-member {
+      @include span-columns(2);
+      height: 60vw;
+    }
+  }
+}
+
+#staff-agencies {
+  margin-top: 60px;
+  
+  .col-content {
+    @include span-columns(2);
+    @include shift(1);
+    padding-top: 280px;
+    
+    p {
+      color: $color-grey;
+      font-size: em(12);
+      margin-right: 20px;
+    }
+    
+    a {
+      color: $color-orange;
+      float: right;
+      font-size: em(11);
+      text-decoration: none;
+    }
+  }
+  
+  @include media($mobile) {
+    .col-content {
+      @include span-columns(2);
+      @include shift(0);
+      padding-top: 0px;
+    }
+  }
+}
+
+#clients {
+  .client {
+    @include span-columns(2);
+    @include omega(4n);
+    background-repeat: no-repeat;
+    background-position: center center;
+    height: 200px;
+  }
+  
+  #client-1 { @include retina-image('../images/clients/client-1', 140px 56px); }
+  #client-2 { @include retina-image('../images/clients/client-2', 87px 56px); }
+  #client-3 { @include retina-image('../images/clients/client-3', 131px 56px); }
+  
+  @include media($mobile) {
+    .client {
+      @include span-columns(1 of 2);
+      @include omega(2n);
+    }
+  }
+}
+
+#where-map {
+  background: url(../images/where-map.jpg);
+  background-size: cover;
+  height: 295px;
+  overflow: hidden;
+  
+  .title {
+    color: white;
+    display: block;
+    font-family: $din;
+    font-size: em(28);
+    margin: 30px 40px;
+    
+    small {
+      display: block;
+      font-size: 0.58em;
+    }
+  }
+}
+
+#where-photos {
+  margin-top: 60px;
+  
+  .item {
+    @include span-columns(4);
+    @include omega(2n);
+    border: 1.5px solid white;
+    height: 480px;
+    margin-bottom: 2px;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .text {
+    position: relative;
+    
+    .content {
+      bottom: 60px;
+      color: $color-grey;
+      left: 30%;
+      position: absolute;
+      width: 40%; 
+    }
+  }
+  
+  @include media($mobile) {
+    .item {
+      @include span-columns(2 of 2);
+      height: 100vw;
+    }
+    
+    .text {
+      height: auto;
+      
+      .content {
+        margin-left: 15%;
+        position: static;
+        width: 70%;
+      }
+    }
+  }
+}
+
+/**
+ * Lab
+ */
+
+#lab-title {
+  h2 {
+    font-size: em(120);
+    margin: 40px 60px 0px;
+  }
+  
+  h3 {
+    color: $color-orange;
+    font-size: em(25);
+    margin: -40px 60px 0px 54px;
+  }
+  
+  @include media($mobile) {
+    h2 {
+      font-size: em(68);
+      margin: 40px 0px 0px;
+    }
+    
+    h3 {
+      font-size: em(16);
+      margin: -28px 0px 0px 20px
+    }
+  }
+}
+
+/**
+ * Contact
+ */
+
+#contact-team {
+  @include outer-container;
+  background: url('../images/contact-team.jpg');
+  background-size: cover;
+  height: 144px;
+  overflow: hidden;
+  margin-top: 0px;
+  
+  p {
+    @include span-columns(2.5);
+    @include shift(0.5);
+    color: $color-dark;
+    font-family: $din;
+    font-size: em(18);
+    margin-bottom: 24px;
+    margin-top: 24px;
+    
+    a {
+      border-bottom: 1px solid $color-dark;
+      color: $color-dark;
+      text-decoration: none;
+    }
+  }
+  
+  @include media($mobile) {
+    height: auto;
+    
+    p {
+      @include span-columns(2);
+      @include shift(0);
+      font-size: em(14);
+      padding-left: 16px;
+      padding-right: 16px;
+      width: 100%;
+    }
+  }
+}
